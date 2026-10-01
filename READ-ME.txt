@@ -1,0 +1,78 @@
+VX-7R MEMORY CONTROL — WINDOWS 11
+
+Extract the whole ZIP into a NEW folder. Double-click START.vbs.
+The console stays hidden. Uses built-in Windows PowerShell 5.1 and .NET.
+
+AVAILABLE BUTTONS
+Read Radio / Cancel / Refresh COM / Save Image / Open Image.
+New / Apply Edit / Delete / Import CSV / Export CSV / Write Radio.
+Banks assigns selected memory to any of MG1–MG9 (48 memories per bank).
+Search filters channel number, stored frequency and name.
+FM/AM/WFM and power buttons update the SELECTED MEMORY in the working image.
+File, Radio, Memory, Tools and Help menus provide the corresponding actions.
+Other top menus provide help explaining available controls.
+
+NOT IMPLEMENTED / NOT SUPPORTED
+Live VFO tuning, remote keypad, PTT and live scanning are unavailable through
+the VX-7R clone cable. Set Mode/DTMF, special memories, APRS/GPS and sensor
+editing are not implemented. The corresponding tabs/mode controls are disabled.
+The top green LCDs and radio photograph are artwork, not live telemetry.
+FM is the driver's memory mode; separate NFM, SSB, CW and DATA choices are
+not available in this memory editor. There are 450 decoded regular memories;
+special memories are retained in the image but not decoded/edited.
+
+READ AND EDIT
+1. Radio off; connect the correctly wired VX-7R cable and charged radio.
+2. Hold MON/F while powering on until CLONE appears.
+3. Select COM, click Read Radio, then press BAND within 60 seconds.
+4. The app accepts exactly 16211 bytes only after all three checksums pass.
+5. The original image is automatically saved in the Backups folder.
+6. Select a memory row. Edit fields at right, then click Apply Edit.
+7. New adds the first unused regular memory. Delete removes the selected one.
+8. Save Image stores the working clone image. Open Image accepts an existing
+   VX-7R binary image only if size and checksums are correct.
+
+EDITOR
+Frequency and Offset are in MHz; Offset is an unsigned magnitude, with Duplex
+blank / minus / plus / split selecting the direction or odd split.
+Names have at most eight characters in the radio's character set.
+ToneMode: Off / Tone (encode) / TSQL / DTCS. Existing cross-tone mode is
+preserved by selecting Cross (preserve); new cross-tone combinations cannot
+be created here. DCS and tone values must be in the radio's supported lists.
+Step is in kHz. Skip blank / S / P means normal / skipped / preferential.
+Power codes: 0=L1 50mW, 1=L2 1W, 2=L3 2.5W, 3=Hi 5W.
+On USA 222–225 MHz, only codes 0 and 1 are valid; code 1 means 300mW there.
+Stored BCD frequency has 1kHz precision. This app displays that stored value;
+fractional-step and airband rounding corrections are not applied. The radio
+may imply fractional digits. Original bytes are retained when not edited.
+
+CSV
+Export CSV uses this app's Channel, Frequency, Mode, Name, Duplex, Offset,
+ToneMode, Tone, DCS, Step, Power and Skip columns. It is NOT CHIRP CSV.
+Import validates all records before changing the image, merging into the
+specified channels. Empty/deletion records are not supported. Banks are
+not in CSV: use Banks for membership. The base image is required so unrelated
+radio configuration bytes are preserved. Never import a CSV as a whole image.
+
+WRITE RADIO
+Only write an image originally downloaded from this same radio.
+Write Radio checks/recalculates checksums and saves the original in Backups.
+Its prompt asks you to hold MON/F at power-on for CLONE, then press V/M on the
+radio for CLONE WAIT. Click Yes to send. Keep cable and power connected.
+The first two blocks need radio acknowledgement; the remainder uses paced
+8-byte writes. Sending takes about two minutes. No final success ACK is
+available for the bulk transfer, so the app reports Image sent, not verified.
+Check the radio returns to CLONE, then perform Read Radio again. The app reports
+Write verified only if all 16211 read-back bytes match the transmitted image.
+If they differ, it explicitly reports the difference. Do not claim success
+from the send progress alone. A radio may change configuration bytes internally;
+that still requires investigating the difference before treating it as verified.
+
+DIAGNOSTICS / VALIDATION
+VX7R-error.log records operations and errors. It does not log image contents.
+The fixed font handling is retained. The script passes a PowerShell syntax
+parser; clone protocol, memory bit fields, checksums, tone/code tables and
+bank offsets were checked against the included CHIRP source references.
+The new editing and upload path HAS NOT been executed on Windows or tested
+with a physical radio. Preserve your original backup and verify writes by read-back.
+GPL-3.0-or-later: see COPYING.txt and source copyright notices.
